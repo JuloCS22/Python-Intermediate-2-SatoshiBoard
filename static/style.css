@@ -1,0 +1,127 @@
+body {
+    font-family: verdana, serif;
+    padding: 5%;
+}
+
+h2 {
+    position: fixed;
+    top: 5px;
+    right: 10px;
+    font-size: small;
+    color: #EFCDAE;
+}
+
+h1 {
+    color: #414042;
+}
+
+.title img {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+}
+
+.thx-to {
+    text-align: center;
+    font-size: small;
+    font-style: italic;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+}
+
+nav a {
+    text-decoration: none;
+    color: #414042;
+}
+
+li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding: 10px 0 0 0;
+    cursor: pointer;
+}
+
+
+li img {
+    padding-left: 10px;
+}
+
+.results {
+    padding: 5%;
+}
+
+.detail-img {
+    width: 30%;
+    height: 30%;
+}
+
+.details {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.info-crypto p {
+    border-bottom: rgba(14, 21, 2, 0.32) 1px solid;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 20px;
+}
+
+.buttons button {
+    border: none;
+    background-color: #414042;
+    color: white;
+    height: 30px;
+    width: 80px;
+    text-align: center;
+    border-radius: 30px;
+    transition: 0.3s ease-in-out;
+}
+
+.close-button {
+    color: #414042;
+}
+
+.fav-button {
+    color: #130707;
+}
+
+.selected {
+    color: #ac2323;
+}
+
+.close-button, .fav-button {
+    background-color: white;
+    border: none;
+    transition: 0.3s ease-in-out;
+    font-size: 50px;
+}
+
+.close-button:hover, .fav-button:hover {
+    font-size: 60px;
+}
+
+.upper-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.buttons button:hover {
+    width: 90px;
+}
