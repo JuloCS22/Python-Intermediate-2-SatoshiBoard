@@ -132,7 +132,6 @@ function showGraph(days, id) {
         .then(response => response.json())
         .then(data => {
             if (data.error) {
-                console.log(data.error);
                 document.getElementById('cryptoChart').innerHTML = `<p>Error: ${data.error}</p>`;
                 return;
             }
@@ -190,7 +189,6 @@ function showGraph(days, id) {
 
 favorites.addEventListener('click', (event) => {
     event.preventDefault();
-    console.log('You just clicked on favorites');
 
     fetch('/favorites', {
         method: 'POST',
@@ -217,7 +215,6 @@ favorites.addEventListener('click', (event) => {
                     fav.addEventListener('click', () => {
                         renderHome()
                         handleClick(favorite.id)
-                        console.log(favorite.id)
                     })
                     const list_favorites = document.getElementById('list-favorites');
                     console.log(fav)

@@ -4,16 +4,6 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
-"""
-1. Bien envoyer l'ID en back.
-2. Bien récupérer grace à l'ID, une nouvelle liste, avec image et nom.
-3. Renvoyer en front cette liste afin de l'afficher joliement.
-4. Ajouter la fonction "fav / pas fav" dans le détail de la crypto.
-4. Pouvoir cliquer sur la crypto correspondante et pouvoir la supprimer des fav.
-6. Détail des fav comme dans la liste dans la rubrique et suppression possible.
-"""
-
-
 app = Flask(__name__)
 
 
