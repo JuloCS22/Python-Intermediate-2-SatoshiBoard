@@ -1,8 +1,8 @@
 Welcome to my humble app for cryptos!
 
-If you don't wanna create your own account :
-id : testing@test.com
-password : Testing@25
+If you don't wanna create your own account : <br />
+id : testing@test.com <br />
+password : Testing@25 <br />
 
 Enjoy.
 
