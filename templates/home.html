@@ -9,30 +9,29 @@
 <body>
 
     <nav>
-        <a href="/">Home</a>
-        <a href="/">Favorites</a>
-        <a href="/">Login</a>
+        <a id="home-button">Home</a>
+        <a id="favorites"></a>
+        <a id="login-button"></a>
     </nav>
 
     <div class="title">
         <img src="{{ url_for('static', filename='logo.jpg') }}" alt="logo" />
         <h1>SatoshiBoard</h1>
     </div>
-    <h2>V 1.0</h2>
+    <h2>V 2.0</h2>
 
-
-    <div class="search-input">
-        <input type="text" placeholder="Search here..." id="search-input" />
+    <div class="main-container">
+        <div id="main-content"></div>
     </div>
 
-    <div class="results" id="results"></div>
-    <div id="cryptoChart" style="width:100%; height:400px;"></div>
 
 
-<p class="thx-to">Made without hurting any crypto and a lot of passion thx to <a href="https://www.coingecko.com/">CoinGecko API</a>
-    <br/>(all prices are in $CAD)
-</p>
+    <p class="thx-to">Made without hurting any crypto and a lot of passion thx to <a href="https://www.coingecko.com/">CoinGecko API</a>
+        <br/>(all prices are in $CAD)
+    </p>
     <script src="{{ url_for('static', filename='handlechange.js') }}"></script>
+    <script src="{{ url_for('static', filename='handleaccount.js') }}"></script>
+    <script src="{{ url_for('static', filename='handlefav.js') }}"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
 </body>
 </html>

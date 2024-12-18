@@ -15,6 +15,10 @@ h1 {
     color: #414042;
 }
 
+h3 {
+    text-align: center;
+}
+
 .title img {
     height: 150px;
     width: 150px;
@@ -43,6 +47,7 @@ nav {
 nav a {
     text-decoration: none;
     color: #414042;
+    cursor: pointer;
 }
 
 li {
@@ -60,6 +65,7 @@ li img {
 
 .results {
     padding: 5%;
+    min-height: 400px;
 }
 
 .detail-img {
@@ -83,7 +89,7 @@ li img {
     padding-top: 20px;
 }
 
-.buttons button {
+.buttons button, .login-form button, #logout-button {
     border: none;
     background-color: #414042;
     color: white;
@@ -92,14 +98,33 @@ li img {
     text-align: center;
     border-radius: 30px;
     transition: 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.login-form .connect-button, #logout-button {
+    width: 140px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.login-form .connect-button:hover, #logout-button:hover {
+    width: 150px;
+}
+
+.connection-buttons {
+    display: flex;
+    align-items: center;
+    text-align: center;
 }
 
 .close-button {
     color: #414042;
+    cursor: pointer;
 }
 
 .fav-button {
     color: #130707;
+    cursor: pointer;
 }
 
 .selected {
@@ -122,6 +147,44 @@ li img {
     justify-content: flex-end;
 }
 
-.buttons button:hover {
+.buttons button:hover, .login-form button:hover{
     width: 90px;
+}
+
+.main-container, #main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+}
+
+.login-form label {
+    padding-bottom: 50px;
+}
+
+.error {
+    padding-top: 30px;
+    font-style: italic;
+    text-align: center;
+}
+
+.invalid {
+    color: #753636;
+}
+
+.list-favorites li {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
 }

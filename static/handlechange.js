@@ -1,23 +1,43 @@
-const searchInput = document.getElementById('search-input');
-const clickedCrypto= document.getElementById('clicked-crypto');
-const listElement = document.getElementsByName('li');
+const login = document.getElementById('login-button');
+const favorites = document.getElementById('favorites');
+const home = document.getElementById('home-button');
+favorites.innerHTML = `Favorites`
 
-function handleInput() {
+const mainContent = document.getElementById('main-content');
 
+function renderHome() {
+    mainContent.innerHTML = `
+        <div class="search-input">
+            <input type="text" placeholder="Search here..." id="search-input" />
+        </div>
+        <div class="results" id="results"></div>
+    `;
+    const searchInput = document.getElementById('search-input');
+    const results = document.getElementById('results');
+    searchInput.addEventListener('input', () => {
+        handleInput(searchInput, results);
+    })
+}
+
+renderHome();
+
+home.addEventListener('click', () => {
+    renderHome();
+})
+
+function handleInput(searchInput, results) {
+    console.log(searchInput.value);
     fetch('/search-input', {
         method: 'POST',
-        headers: {'content-type': 'application/json'},
-        body: JSON.stringify({query: searchInput.value})
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ query: searchInput.value })
     })
         .then(response => response.json())
         .then(data => {
-            const results = document.getElementById('results');
             results.innerHTML = '';
-            document.getElementById('cryptoChart').innerHTML = '';
 
             data.forEach((item) => {
                 const listItem = document.createElement('li');
-
                 listItem.innerHTML = `
                 ${item.name}
                 <img src="${item.image.small}" alt="${item.name}"/>
@@ -26,15 +46,15 @@ function handleInput() {
                 listItem.addEventListener('click', () => {
                     handleClick(item.id);
                     results.innerHTML = ''
-                })
-
-                document.getElementById('results').appendChild(listItem);
-            })
+                });
+                results.appendChild(listItem);
+            });
         })
-        .catch(error => console.log(error));
+        .catch(error => console.error(error));
 }
 
-function handleClick(id) {
+
+function handleClick(id, results) {
     fetch('/handle-click', {
         method: 'POST',
         headers: {'content-type': 'application/json'},
@@ -44,13 +64,13 @@ function handleClick(id) {
         .then(data => {
 
             if (data.length === 0) {
-                document.getElementById('results').innerHTML = `No results found. (happens a lot with the free version)`
+                results.innerHTML = `No results found. (happens a lot with the free version)`
                 return;
             }
-            data.forEach((item) => {
+            data.detailed_crypto.forEach((item) => {
                 document.getElementById('results').innerHTML = `
                 <div class="details">
-                    <img class="detail-img" src="${item.image}">
+                    <img class="detail-img" src="${item.image}" alt="${item.name}">
                     <div class="info-crypto">
                         <div class="upper-buttons">
                             <button class="fav-button" id="fav-button"><i class="fas fa-heart"></i></button>
@@ -72,20 +92,28 @@ function handleClick(id) {
                     <button class="graph-button" data-days="90">3 Months</button>  
                     <button class="graph-button" data-days="180">6 Months</button>  
                 </div>
+                <div id="cryptoChart" style="width:100%; height:400px;"></div>
                 `
                 document.getElementById('close-button').addEventListener('click', () => {
                     document.getElementById('results').innerHTML = '';
-                    document.getElementById('cryptoChart').innerHTML = '';
                     document.getElementById('search-input').value = '';
+                    if (document.getElementById('cryptoChart')) {
+                        document.getElementById('cryptoChart').innerHTML = '';
+                    }
                 })
 
+                if (data.is_favorite) {
+                    console.log(data.is_favorite)
+                    document.getElementById('fav-button').classList.add('selected')
+                }
+
                 document.getElementById('fav-button').addEventListener('click', () => {
-                    document.getElementById('fav-button').classList.toggle('selected');
+                    handleFavorites(id)
                 })
 
                 const buttons = document.querySelectorAll('.graph-button');
                 buttons.forEach(button => {
-                    button.addEventListener('click', (event) => {
+                    button.addEventListener('click', () => {
                         const days = button.getAttribute('data-days');
                         const id = item.id;
                         showGraph(days, id)
@@ -160,10 +188,67 @@ function showGraph(days, id) {
         .catch(error => console.log(error));
 }
 
-function closeCrypto() {
+favorites.addEventListener('click', (event) => {
+    event.preventDefault();
+    console.log('You just clicked on favorites');
 
+    fetch('/favorites', {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+    })
+        .then(response => response.json())
+        .then(response => {
+            if (response.success) {
+                if (response.favorites.length === 0) {
+                    mainContent.innerHTML = `
+                    <h3>You don't have any favorites crypto young Satoshi-fan boy</h3>
+                    `;
+                } else {
+                    mainContent.innerHTML = `
+                <div class="list-favorites" id="list-favorites">Your favorites crypto:</div>
+                `
+                response.favorites.forEach(favorite => {
+                    const fav = document.createElement('li');
+                    fav.innerHTML = `
+                    ${favorite.name}
+                    <img src="${favorite.image.small}" alt="${favorite.name}">
+                    `;
+
+                    fav.addEventListener('click', () => {
+                        renderHome()
+                        handleClick(favorite.id)
+                        console.log(favorite.id)
+                    })
+                    const list_favorites = document.getElementById('list-favorites');
+                    console.log(fav)
+                    list_favorites.appendChild(fav)
+                })
+                }
+
+            } else {
+                mainContent.innerHTML = `
+<p>You're not connected yet, young Satoshi-fan boy</p>
+<p>Click on 'Login' to either create an account or log in to an existing one.</p>
+`;
+                console.log(response.message)
+            }
+        })
+})
+
+function handleFavorites(id) {
+    fetch('/handle-favorites', {
+        method: 'POST',
+        headers: {'content-type': 'application/json'},
+        body: JSON.stringify({ id: id })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('fav-button').classList.toggle('selected');
+            } else {
+                alert('You need an account in order to do that cutie')
+            }
+        })
+        .catch(error => console.log(error));
 }
 
-
-
-searchInput.addEventListener('input', handleInput);
